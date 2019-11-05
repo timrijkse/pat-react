@@ -18,7 +18,7 @@ class DefaultLayout extends Component {
           isNavigationVisible={this.props.isHeaderNavigationVisible}
         />
 
-        <ContentWrapper>{this.children}</ContentWrapper>
+        <ContentWrapper>{this.props.children}</ContentWrapper>
       </div>
     );
   }
