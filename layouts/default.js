@@ -1,5 +1,3 @@
-import { Component } from "react";
-import { connect } from "react-redux";
 import styled from "styled-components";
 import SiteHeader from "../components/site-header";
 
@@ -10,23 +8,13 @@ const ContentWrapper = styled.div`
   padding-top: 200px;
 `;
 
-class DefaultLayout extends Component {
-  render() {
-    return (
-      <div>
-        <SiteHeader
-          isNavigationVisible={this.props.isHeaderNavigationVisible}
-        />
+const DefaultLayout = props => {
+  return (
+    <div>
+      <SiteHeader />
+      <ContentWrapper>{props.children}</ContentWrapper>
+    </div>
+  );
+};
 
-        <ContentWrapper>{this.props.children}</ContentWrapper>
-      </div>
-    );
-  }
-}
-
-function mapStateToProps(state) {
-  const { isHeaderNavigationVisible } = state;
-  return { isHeaderNavigationVisible };
-}
-
-export default connect(mapStateToProps)(DefaultLayout);
+export default DefaultLayout;

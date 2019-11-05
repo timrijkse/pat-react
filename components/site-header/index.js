@@ -1,6 +1,6 @@
-import React from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { useScrollPosition } from "../../hooks/use-scroll-position";
 import Hamburger from "../icons/hamburger";
 import SiteLogo from "../site-logo";
 
@@ -29,8 +29,11 @@ const IconSet = styled.div`
 `;
 
 const HorizontalNavigation = styled.div`
-  opacity: ${props => (props.isVisible ? 1 : 0)};
-  pointer-events: ${props => (props.isVisible ? "inherit" : "none")};
+  will-change: opacity;
+  transition: opacity 0.25s ease-out;
+  opacity: ${props => (props.isHorizontalNavigationVisible ? 1 : 0)};
+  pointer-events: ${props =>
+    props.isHorizontalNavigationVisible ? "inherit" : "none"};
   display: flex;
   margin-top: 32px;
   justify-content: center;
@@ -39,6 +42,20 @@ const HorizontalNavigation = styled.div`
 const NavigationButton = styled.button`
   margin: 0 32px;
 `;
+
+export function HideOnScroll({ children }) {
+  const [hideOnScroll, setHideOnScroll] = useState(true);
+
+  useScrollPosition(
+    ({ prevPos, currPos }) => {
+      const isShow = currPos.y > prevPos.y;
+      if (isShow !== hideOnScroll) setHideOnScroll(isShow);
+    },
+    [hideOnScroll]
+  );
+
+  return children(hideOnScroll);
+}
 
 class SiteHeader extends React.Component {
   render() {
@@ -56,17 +73,23 @@ class SiteHeader extends React.Component {
           </IconSet>
         </TopBar>
 
-        <HorizontalNavigation isVisible={this.props.isNavigationVisible}>
-          <NavigationButton>Latest</NavigationButton>
-          <NavigationButton>Apparel</NavigationButton>
-          <NavigationButton>Footwear</NavigationButton>
-          <NavigationButton>Brands</NavigationButton>
-          <NavigationButton>Accessories</NavigationButton>
-          <NavigationButton>Blog</NavigationButton>
-        </HorizontalNavigation>
+        <HideOnScroll>
+          {isHorizontalNavigationVisible => (
+            <HorizontalNavigation
+              isHorizontalNavigationVisible={isHorizontalNavigationVisible}
+            >
+              <NavigationButton>Latest</NavigationButton>
+              <NavigationButton>Apparel</NavigationButton>
+              <NavigationButton>Footwear</NavigationButton>
+              <NavigationButton>Brands</NavigationButton>
+              <NavigationButton>Accessories</NavigationButton>
+              <NavigationButton>Blog</NavigationButton>
+            </HorizontalNavigation>
+          )}
+        </HideOnScroll>
       </SiteHeaderWrapper>
     );
   }
 }
 
-export default connect()(SiteHeader);
+export default SiteHeader;
