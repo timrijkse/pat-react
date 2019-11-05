@@ -6,7 +6,7 @@ function useHideOnScroll() {
 
   useScrollPosition(
     ({ prevPos, currPos }) => {
-      const isScrolledEnough = currPos.y > prevPos.y || currPos.y > -200;
+      const isScrolledEnough = currPos.y > prevPos.y || currPos.y > -100;
       if (isScrolledEnough !== hideOnScroll) setHideOnScroll(isScrolledEnough);
     },
     [hideOnScroll]

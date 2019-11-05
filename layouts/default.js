@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import SiteHeader from "../components/site-header";
+import SideNavigation from "../components/side-navigation";
 
 const ContentWrapper = styled.div`
   width: 100%;
@@ -12,6 +13,7 @@ const DefaultLayout = props => {
   return (
     <div>
       <SiteHeader />
+      <SideNavigation isVisible={false} />
       <ContentWrapper>{props.children}</ContentWrapper>
     </div>
   );

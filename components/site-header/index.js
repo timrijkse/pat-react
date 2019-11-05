@@ -4,7 +4,7 @@ import useHideOnScroll from "../../hooks/use-hide-on-scroll";
 import Hamburger from "../icons/hamburger";
 import SiteLogo from "../site-logo";
 
-const SiteHeaderWrapper = styled.nav`
+const StyledSiteHeader = styled.nav`
   position: fixed;
   left: 0;
   top: 0;
@@ -44,7 +44,7 @@ const NavigationButton = styled.button`
 
 const SiteHeader = () => {
   return (
-    <SiteHeaderWrapper>
+    <StyledSiteHeader>
       <TopBar>
         <IconHamburger />
 
@@ -65,7 +65,7 @@ const SiteHeader = () => {
         <NavigationButton>Accessories</NavigationButton>
         <NavigationButton>Blog</NavigationButton>
       </HorizontalNavigation>
-    </SiteHeaderWrapper>
+    </StyledSiteHeader>
   );
 };
 
