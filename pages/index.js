@@ -1,25 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
 import { showHeaderNavigation, hideHeaderNavigation } from "../store";
+import DefaultLayout from "../layouts/default";
 import SiteWrapper from "../components/site-wrapper";
 
 class Index extends React.Component {
-  static getInitialProps({ reduxStore, req }) {
-    const isServer = !!req;
-    return {};
-  }
-
   componentDidMount() {
-    console.log(this.props.showHeaderNavigation());
+    console.log("componentDidMount", this.props);
   }
 
   componentWillUnmount() {}
 
   render() {
     return (
-      <div>
+      <DefaultLayout>
         <SiteWrapper>Home page</SiteWrapper>
-      </div>
+      </DefaultLayout>
     );
   }
 }

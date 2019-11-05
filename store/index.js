@@ -5,7 +5,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 const initialAppState = {
-  isHeaderNavigationVisible: false
+  isHeaderNavigationVisible: true
 };
 
 export const actionTypes = {

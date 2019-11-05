@@ -1,6 +1,5 @@
 import React from "react";
 import { connect, useSelector, useDispatch } from "react-redux";
-import { showHeaderNavigation, hideHeaderNavigation } from "../../store";
 import styled from "styled-components";
 import Hamburger from "../icons/hamburger";
 import SiteLogo from "../site-logo";
@@ -30,6 +29,8 @@ const IconSet = styled.div`
 `;
 
 const HorizontalNavigation = styled.div`
+  opacity: ${props => (props.isVisible ? 1 : 0)};
+  pointer-events: ${props => (props.isVisible ? "inherit" : "none")};
   display: flex;
   margin-top: 32px;
   justify-content: center;
@@ -40,19 +41,6 @@ const NavigationButton = styled.button`
 `;
 
 class SiteHeader extends React.Component {
-  static getInitialProps({ reduxStore, req }) {
-    console.log("redx");
-    const isServer = !!req;
-    reduxStore.dispatch(serverRenderClock(isServer));
-
-    return {};
-  }
-
-  componentDidMount() {
-    const { dispatch } = this.props;
-    console.log("dispatch", dispatch);
-  }
-
   render() {
     return (
       <SiteHeaderWrapper>
@@ -68,7 +56,7 @@ class SiteHeader extends React.Component {
           </IconSet>
         </TopBar>
 
-        <HorizontalNavigation>
+        <HorizontalNavigation isVisible={this.props.isNavigationVisible}>
           <NavigationButton>Latest</NavigationButton>
           <NavigationButton>Apparel</NavigationButton>
           <NavigationButton>Footwear</NavigationButton>
