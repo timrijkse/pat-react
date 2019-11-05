@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useScrollPosition } from "../../hooks/use-scroll-position";
+import useHideOnScroll from "../../hooks/use-hide-on-scroll";
 import Hamburger from "../icons/hamburger";
 import SiteLogo from "../site-logo";
 
@@ -31,9 +31,8 @@ const IconSet = styled.div`
 const HorizontalNavigation = styled.div`
   will-change: opacity;
   transition: opacity 0.25s ease-out;
-  opacity: ${props => (props.isHorizontalNavigationVisible ? 1 : 0)};
-  pointer-events: ${props =>
-    props.isHorizontalNavigationVisible ? "inherit" : "none"};
+  opacity: ${props => (props.isVisible ? 1 : 0)};
+  pointer-events: ${props => (props.isVisible ? "inherit" : "none")};
   display: flex;
   margin-top: 32px;
   justify-content: center;
@@ -43,53 +42,31 @@ const NavigationButton = styled.button`
   margin: 0 32px;
 `;
 
-export function HideOnScroll({ children }) {
-  const [hideOnScroll, setHideOnScroll] = useState(true);
+const SiteHeader = () => {
+  return (
+    <SiteHeaderWrapper>
+      <TopBar>
+        <IconHamburger />
 
-  useScrollPosition(
-    ({ prevPos, currPos }) => {
-      const isShow = currPos.y > prevPos.y;
-      if (isShow !== hideOnScroll) setHideOnScroll(isShow);
-    },
-    [hideOnScroll]
-  );
+        <SiteLogo />
 
-  return children(hideOnScroll);
-}
-
-class SiteHeader extends React.Component {
-  render() {
-    return (
-      <SiteHeaderWrapper>
-        <TopBar>
-          <IconHamburger />
-
-          <SiteLogo />
-
-          <IconSet>
-            {/* <IconSearch />
+        <IconSet>
+          {/* <IconSearch />
         <IconAccount />
         <ShoppingCount /> */}
-          </IconSet>
-        </TopBar>
+        </IconSet>
+      </TopBar>
 
-        <HideOnScroll>
-          {isHorizontalNavigationVisible => (
-            <HorizontalNavigation
-              isHorizontalNavigationVisible={isHorizontalNavigationVisible}
-            >
-              <NavigationButton>Latest</NavigationButton>
-              <NavigationButton>Apparel</NavigationButton>
-              <NavigationButton>Footwear</NavigationButton>
-              <NavigationButton>Brands</NavigationButton>
-              <NavigationButton>Accessories</NavigationButton>
-              <NavigationButton>Blog</NavigationButton>
-            </HorizontalNavigation>
-          )}
-        </HideOnScroll>
-      </SiteHeaderWrapper>
-    );
-  }
-}
+      <HorizontalNavigation isVisible={useHideOnScroll()}>
+        <NavigationButton>Latest</NavigationButton>
+        <NavigationButton>Apparel</NavigationButton>
+        <NavigationButton>Footwear</NavigationButton>
+        <NavigationButton>Brands</NavigationButton>
+        <NavigationButton>Accessories</NavigationButton>
+        <NavigationButton>Blog</NavigationButton>
+      </HorizontalNavigation>
+    </SiteHeaderWrapper>
+  );
+};
 
 export default SiteHeader;
