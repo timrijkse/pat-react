@@ -1,4 +1,6 @@
 import React from "react";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { showHeaderNavigation, hideHeaderNavigation } from "../../store";
 import styled from "styled-components";
 import Hamburger from "../icons/hamburger";
 import SiteLogo from "../site-logo";
@@ -37,29 +39,46 @@ const NavigationButton = styled.button`
   margin: 0 32px;
 `;
 
-const SiteHeader = () => (
-  <SiteHeaderWrapper>
-    <TopBar>
-      <IconHamburger />
+class SiteHeader extends React.Component {
+  static getInitialProps({ reduxStore, req }) {
+    console.log("redx");
+    const isServer = !!req;
+    reduxStore.dispatch(serverRenderClock(isServer));
 
-      <SiteLogo />
+    return {};
+  }
 
-      <IconSet>
-        {/* <IconSearch />
+  componentDidMount() {
+    const { dispatch } = this.props;
+    console.log("dispatch", dispatch);
+  }
+
+  render() {
+    return (
+      <SiteHeaderWrapper>
+        <TopBar>
+          <IconHamburger />
+
+          <SiteLogo />
+
+          <IconSet>
+            {/* <IconSearch />
         <IconAccount />
         <ShoppingCount /> */}
-      </IconSet>
-    </TopBar>
+          </IconSet>
+        </TopBar>
 
-    <HorizontalNavigation>
-      <NavigationButton>Latest</NavigationButton>
-      <NavigationButton>Apparel</NavigationButton>
-      <NavigationButton>Footwear</NavigationButton>
-      <NavigationButton>Brands</NavigationButton>
-      <NavigationButton>Accessories</NavigationButton>
-      <NavigationButton>Blog</NavigationButton>
-    </HorizontalNavigation>
-  </SiteHeaderWrapper>
-);
+        <HorizontalNavigation>
+          <NavigationButton>Latest</NavigationButton>
+          <NavigationButton>Apparel</NavigationButton>
+          <NavigationButton>Footwear</NavigationButton>
+          <NavigationButton>Brands</NavigationButton>
+          <NavigationButton>Accessories</NavigationButton>
+          <NavigationButton>Blog</NavigationButton>
+        </HorizontalNavigation>
+      </SiteHeaderWrapper>
+    );
+  }
+}
 
-export default SiteHeader;
+export default connect()(SiteHeader);
