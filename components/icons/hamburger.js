@@ -1,5 +1,5 @@
-const Hamburger = ({ className, children }) => (
-  <svg className={className} viewBox="0 0 24 14">
+const Hamburger = ({ className, onClick, children }) => (
+  <svg className={className} viewBox="0 0 24 14" onClick={onClick}>
     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g transform="translate(0.000000, -5.000000)" fill="#0F0F0F">
         <path

@@ -1,4 +1,6 @@
-import React, { useState, forwardRef } from "react";
+import React, { useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { showHeaderNavigation } from "../../store";
 import styled from "styled-components";
 import useHideOnScroll from "../../hooks/use-hide-on-scroll";
 import Hamburger from "../icons/hamburger";
@@ -44,7 +46,7 @@ const StyledLink = styled.a`
   margin: 0 32px;
 `;
 
-const Buttons = [
+const buttons = [
   {
     title: "Latest",
     slug: "latest"
@@ -67,26 +69,17 @@ const Buttons = [
   }
 ];
 
-const HorizontalNavigationButtons = () => {
-  return Buttons.map(link => {
-    return (
-      <Link
-        href="/collections/[collection]"
-        as={`/collections/${link.slug}`}
-        passHref
-        key={link.slug}
-      >
-        <StyledLink>{link.title}</StyledLink>
-      </Link>
-    );
-  });
-};
-
 const SiteHeader = () => {
+  const dispatch = useDispatch();
+
+  const onClickHamburger = () => {
+    dispatch(showHeaderNavigation());
+  };
+
   return (
     <StyledSiteHeader>
       <TopBar>
-        <IconHamburger />
+        <IconHamburger onClick={onClickHamburger} />
 
         <SiteLogo />
 
@@ -98,14 +91,19 @@ const SiteHeader = () => {
       </TopBar>
 
       <HorizontalNavigation isVisible={useHideOnScroll()}>
-        <HorizontalNavigationButtons />
+        {buttons.map(link => (
+          <Link
+            href="/collections/[collection]"
+            as={`/collections/${link.slug}`}
+            passHref
+            key={link.slug}
+          >
+            <StyledLink>{link.title}</StyledLink>
+          </Link>
+        ))}
       </HorizontalNavigation>
     </StyledSiteHeader>
   );
-};
-
-SiteHeader.getInitialProps = async ({ req }) => {
-  return {};
 };
 
 export default SiteHeader;
