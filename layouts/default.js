@@ -13,7 +13,7 @@ const DefaultLayout = props => {
   return (
     <div>
       <SiteHeader />
-      <SideNavigation isVisible={false} />
+      <SideNavigation />
       <ContentWrapper>{props.children}</ContentWrapper>
     </div>
   );

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef } from "react";
 import styled from "styled-components";
 import useHideOnScroll from "../../hooks/use-hide-on-scroll";
 import Hamburger from "../icons/hamburger";
 import SiteLogo from "../site-logo";
+import Link from "next/link";
 
 const StyledSiteHeader = styled.nav`
   position: fixed;
@@ -38,9 +39,48 @@ const HorizontalNavigation = styled.div`
   justify-content: center;
 `;
 
-const NavigationButton = styled.button`
+const StyledLink = styled.a`
+  display: inline-block;
   margin: 0 32px;
 `;
+
+const Buttons = [
+  {
+    title: "Latest",
+    slug: "latest"
+  },
+  {
+    title: "Apparel",
+    slug: "apparel"
+  },
+  {
+    title: "Footwear",
+    slug: "footwear"
+  },
+  {
+    title: "Brands",
+    slug: "brands"
+  },
+  {
+    title: "Blog",
+    slug: "blog"
+  }
+];
+
+const HorizontalNavigationButtons = () => {
+  return Buttons.map(link => {
+    return (
+      <Link
+        href="/collections/[collection]"
+        as={`/collections/${link.slug}`}
+        passHref
+        key={link.slug}
+      >
+        <StyledLink>{link.title}</StyledLink>
+      </Link>
+    );
+  });
+};
 
 const SiteHeader = () => {
   return (
@@ -58,15 +98,14 @@ const SiteHeader = () => {
       </TopBar>
 
       <HorizontalNavigation isVisible={useHideOnScroll()}>
-        <NavigationButton>Latest</NavigationButton>
-        <NavigationButton>Apparel</NavigationButton>
-        <NavigationButton>Footwear</NavigationButton>
-        <NavigationButton>Brands</NavigationButton>
-        <NavigationButton>Accessories</NavigationButton>
-        <NavigationButton>Blog</NavigationButton>
+        <HorizontalNavigationButtons />
       </HorizontalNavigation>
     </StyledSiteHeader>
   );
+};
+
+SiteHeader.getInitialProps = async ({ req }) => {
+  return {};
 };
 
 export default SiteHeader;

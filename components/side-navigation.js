@@ -1,3 +1,4 @@
+import { connect } from "react-redux";
 import styled from "styled-components";
 
 const StyledSideNavigation = styled.nav`
@@ -6,7 +7,9 @@ const StyledSideNavigation = styled.nav`
   position: fixed;
   left: 0;
   top: 0;
-  transform: translateX(${props => (props.isVisible ? 0 : "-100%")});
+  transform: translateX(
+    ${props => (props.isSideNavigationVisible ? 0 : "-100%")}
+  );
   width: 400px;
   height: 100vh;
   background-color: red;
@@ -14,10 +17,17 @@ const StyledSideNavigation = styled.nav`
 
 const SideNavigation = props => {
   return (
-    <StyledSideNavigation isVisible={props.isVisible}>
+    <StyledSideNavigation
+      isSideNavigationVisible={props.isSideNavigationVisible}
+    >
       Haaaaj
     </StyledSideNavigation>
   );
 };
 
-export default SideNavigation;
+function mapStateToProps(state) {
+  const { isSideNavigationVisible } = state;
+  return { isSideNavigationVisible };
+}
+
+export default connect(mapStateToProps)(SideNavigation);
