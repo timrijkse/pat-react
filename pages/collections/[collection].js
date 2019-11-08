@@ -16,8 +16,11 @@ const Collection = () => {
 
   return (
     <DefaultLayout>
-      <DropdownMenu title="Dropdown" items={dropdownItems} />
-      <p>{collection}</p>
+      <center>
+        <DropdownMenu title="Dropdown" items={dropdownItems} activeItem={dropdownItems[2]} />
+        <DropdownMenu title="Dropdown" items={dropdownItems} />
+        <p>{collection}</p>
+      </center>
     </DefaultLayout>
   );
 };
