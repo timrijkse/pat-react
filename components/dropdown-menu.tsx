@@ -1,5 +1,25 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, FunctionComponent, SFC } from "react";
 import styled from "styled-components";
+
+export interface IDropdownMenuItem {
+  title: String;
+  href: String;
+}
+
+interface IDropdownItem {
+  item: IDropdownMenuItem;
+  onClick: Function;
+}
+
+export interface IDropdownMenu {
+  title: string;
+  items: IDropdownMenuItem[];
+  activeItem?: IDropdownMenuItem;
+}
+
+interface IStyledDropdownMenu {
+  isOpen: boolean;
+}
 
 const DropdownToggler = styled.div`
   cursor: pointer;
@@ -25,43 +45,46 @@ const DropdownList = styled.div`
   z-index: 1;
 `;
 
-const DropdownListItem = props => {
-  const onClickDropdownListItem = () => {
+const DropdownItem: FunctionComponent<IDropdownItem> = props => {
+  const onClickDropdownItem = () => {
     props.onClick(props.item);
   };
 
-  return <div onClick={onClickDropdownListItem}>{props.children}</div>;
+  return <div onClick={onClickDropdownItem}>{props.children}</div>;
 };
 
-const StyledDropdownMenu = styled.div`
+const StyledDropdownMenu = styled("div")<IStyledDropdownMenu>`
   position: relative;
   display: inline-block;
   margin: 0 32px;
-  z-index: ${props => (props.isOpen ? 2 : 1)};
+  z-index: ${(props: IStyledDropdownMenu) => (props.isOpen ? 2 : 1)};
 
   ${DropdownList} {
     transition: opacity 0.2s;
-    opacity: ${props => (props.isOpen ? 1 : 0)};
-    pointer-events: ${props => (props.isOpen ? "inherit" : "none")};
+    opacity: ${(props: IStyledDropdownMenu) => (props.isOpen ? 1 : 0)};
+    pointer-events: ${(props: IStyledDropdownMenu) =>
+      props.isOpen ? "inherit" : "none"};
   }
 `;
 
-const DropdownMenu = props => {
+const DropdownMenu: FunctionComponent<IDropdownMenu> = props => {
   let refDropdown = useRef(null);
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState(props.activeItem);
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const [activeItem, setActiveItem] = useState<IDropdownMenuItem>(
+    props.activeItem
+  );
 
-  const onClickDropdownToggler = () => {
+  const onClickDropdownToggler = (): void => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const onClickDropdownListItem = item => {
+  const onClickDropdownItem = (item: IDropdownMenuItem): void => {
     setActiveItem(item);
     setIsDropdownOpen(false);
   };
 
-  const onClickDocument = e => {
+  const onClickDocument = (e: MouseEvent): void => {
     if (isDropdownOpen && !refDropdown.current.contains(e.target)) {
       setIsDropdownOpen(false);
     }
@@ -81,15 +104,15 @@ const DropdownMenu = props => {
         {activeItem ? activeItem.title : props.title}
       </DropdownToggler>
 
-      <DropdownList isOpen={isDropdownOpen}>
+      <DropdownList>
         {props.items.map(item => (
-          <DropdownListItem
-            onClick={onClickDropdownListItem}
-            key={item.title}
+          <DropdownItem
+            onClick={onClickDropdownItem}
+            key={`${item.title}`}
             item={item}
           >
             {item.title}
-          </DropdownListItem>
+          </DropdownItem>
         ))}
       </DropdownList>
     </StyledDropdownMenu>
