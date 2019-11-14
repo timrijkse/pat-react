@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useEffect, useState, useRef, FunctionComponent, SFC } from "react";
 import styled from "styled-components";
 

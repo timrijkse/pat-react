@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useRef, useLayoutEffect } from "react";
 
 const isBrowser = typeof window !== `undefined`;

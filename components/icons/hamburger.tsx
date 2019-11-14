@@ -1,3 +1,5 @@
+import * as React from "react";
+
 const Hamburger = ({ className, onClick, children }) => (
   <svg className={className} viewBox="0 0 24 14" onClick={onClick}>
     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

@@ -1,3 +1,5 @@
+import * as React from "react";
+
 const SiteLogo = ({ className, children }) => (
   <svg className={className} width="110px" height="79px" viewBox="0 0 110 79">
     <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

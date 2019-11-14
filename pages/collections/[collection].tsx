@@ -1,3 +1,4 @@
+import * as React from "react";
 import { SFC } from "react";
 import { useRouter, NextRouter } from "next/router";
 import DefaultLayout from "../../layouts/default";

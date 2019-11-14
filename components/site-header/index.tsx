@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import * as React from "react";
 import { useDispatch } from "react-redux";
 import { showHeaderNavigation } from "../../store";
 import styled from "styled-components";

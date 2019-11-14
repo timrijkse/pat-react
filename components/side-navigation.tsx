@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { hideHeaderNavigation } from "../store";
 import styled from "styled-components";
@@ -65,4 +65,4 @@ const SideNavigation = props => {
   );
 };
 
-export default connect()(SideNavigation);
+export default SideNavigation;
